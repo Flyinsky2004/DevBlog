@@ -10,6 +10,28 @@ const router = createRouter({
         title: '验证页面',
       },
       component: () => import('@/views/Auth.vue'),
+    }, {
+      name: 'test',
+      path: '/test',
+      meta: {
+        title: '开发测试页面',
+      },
+      component: () => import('@/views/Test.vue')
+    }, {
+      name: 'framework',
+      path: '/',
+      component: () => import('@/views/Framework.vue'),
+      children: [
+        {
+          name: 'editBlog',
+          path: '/new',
+          component: () => import('@/views/Common/EditBlog.vue')
+        }, {
+          name: 'viewBlog',
+          path: '/view',
+          component: () => import('@/views/Common/ViewBlog.vue')
+        }
+      ]
     }
   ]
 })

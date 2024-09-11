@@ -1,8 +1,10 @@
 <script setup>
 import {reactive, ref} from "vue";
 import { message } from 'ant-design-vue';
-const [messageApi, contextHolder] = message.useMessage();import {post} from "@/net/index.js";
+import {post} from "@/net/index.js";
 import router from "@/router/index.js";
+
+const [messageApi, contextHolder] = message.useMessage();
 const props = defineProps(['isLoginComponent'])
 const emits = defineEmits(["update:isLoginComponent"]);
 const goAnotherForm = () => {

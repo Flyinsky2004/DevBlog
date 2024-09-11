@@ -16,7 +16,7 @@ axios.defaults.withCredentials = true
 //后端基础url 之后在请求时只用填写路径 Axios会自动以该url为基础添加路径
 const app = createApp(App)
 
-app.use(createPinia())
+app.use(createPinia());
 app.use(router).use(ElementPlus).use(Antd)
 app.config.globalProperties.$axios = axios
 

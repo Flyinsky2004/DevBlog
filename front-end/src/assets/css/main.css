@@ -1,3 +1,17 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+.basic-color {
+    @apply bg-white text-black
+    dark:bg-[#040711] text-white;
+}
+
+body {
+    @apply bg-white text-black
+    dark:bg-[#040711] text-white;
+}
+
+.theme-transition,
+.theme-transition * {
+    transition: background-color 0.1s, color 0.1s !important;
+}
