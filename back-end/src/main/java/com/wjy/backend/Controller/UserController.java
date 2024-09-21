@@ -1,7 +1,7 @@
 package com.wjy.backend.Controller;
 
-import com.wjy.backend.Entity.RestBean;
-import com.wjy.backend.Entity.User;
+import com.wjy.backend.Entity.pojo.RestBean;
+import com.wjy.backend.Entity.pojo.User;
 import com.wjy.backend.Service.UserService;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpSession;

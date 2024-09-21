@@ -1,4 +1,4 @@
-package com.wjy.backend.Entity;
+package com.wjy.backend.Entity.pojo;
 
 import lombok.Data;
 

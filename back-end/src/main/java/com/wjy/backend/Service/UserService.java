@@ -1,6 +1,6 @@
 package com.wjy.backend.Service;
 
-import com.wjy.backend.Entity.User;
+import com.wjy.backend.Entity.pojo.User;
 
 /**
  * @author Flyinsky

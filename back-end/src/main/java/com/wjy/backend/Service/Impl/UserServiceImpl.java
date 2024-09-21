@@ -1,6 +1,6 @@
 package com.wjy.backend.Service.Impl;
 
-import com.wjy.backend.Entity.User;
+import com.wjy.backend.Entity.pojo.User;
 import com.wjy.backend.Mapper.UserMapper;
 import com.wjy.backend.Service.UserService;
 import jakarta.annotation.Resource;
