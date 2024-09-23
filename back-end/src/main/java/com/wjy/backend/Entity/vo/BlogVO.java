@@ -12,10 +12,11 @@ import lombok.Data;
 @Data
 public class BlogVO {
     private Blog blog;
-    private String username;
+    private String username, avator;
 
-    public BlogVO(Blog blog, String username) {
+    public BlogVO(Blog blog, String username, String avator) {
         this.blog = blog;
         this.username = username;
+        this.avator = avator;
     }
 }

@@ -42,4 +42,15 @@ public class UserController {
         User theUser = (User) session.getAttribute("user");
         return RestBean.success("cg", theUser);
     }
+
+    @GetMapping("logout")
+    public RestBean<String> logout(HttpSession session) {
+        User logoinUser = (User) session.getAttribute("user");
+        if (logoinUser == null) return RestBean.failure(401, "您尚未登陆");
+        else {
+            session.removeAttribute("user");
+            session.invalidate();
+        }
+        return RestBean.success("登出成功！");
+    }
 }

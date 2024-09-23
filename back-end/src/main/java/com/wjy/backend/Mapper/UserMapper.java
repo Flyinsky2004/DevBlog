@@ -16,4 +16,7 @@ public interface UserMapper {
 
     @Select("SELECT username FROM tb_users WHERE id = #{id}")
     String getUsernameById(Integer id);
+
+    @Select("SELECT avator FROM tb_users WHERE id = #{id}")
+    String getAvatorById(Integer id);
 }

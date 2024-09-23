@@ -32,7 +32,7 @@ public class BlogServiceImpl implements BlogService {
     public List<BlogVO> getOrderByBlogs() {
         List<BlogVO> result = new ArrayList<>();
         for (Blog blog : blogMapper.getBlogsOrderById()) {
-            result.add(new BlogVO(blog, userMapper.getUsernameById(blog.getAuthorId())));
+            result.add(new BlogVO(blog, userMapper.getUsernameById(blog.getAuthorId()), userMapper.getAvatorById(blog.getAuthorId())));
         }
         return result;
     }
@@ -40,6 +40,6 @@ public class BlogServiceImpl implements BlogService {
     @Override
     public BlogVO getBlogById(int id) {
         Blog blog = blogMapper.getBlogById(id);
-        return new BlogVO(blog, userMapper.getUsernameById(blog.getAuthorId()));
+        return new BlogVO(blog, userMapper.getUsernameById(blog.getAuthorId()), userMapper.getAvatorById(blog.getAuthorId()));
     }
 }

@@ -42,7 +42,7 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-    if (to.meta.title) {
+    if (to.meta.title === undefined) {
         document.title = 'DevBlog'
     } else {
         document.title = to.meta.title

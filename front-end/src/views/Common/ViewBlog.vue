@@ -1,25 +1,35 @@
 <script setup>
-import {ref} from 'vue';
+import {computed, onBeforeMount, onMounted, reactive, ref} from 'vue';
 import {MdPreview, MdCatalog} from 'md-editor-v3';
 import 'md-editor-v3/lib/preview.css';
 import {useThemeStore} from "@/stores/theme.js";
+import {useRoute} from "vue-router";
+import {get} from "@/net/index.js";
+import {message} from "ant-design-vue";
 
+const route = useRoute()
+const pid = route.params.id
 const themeStore = useThemeStore()
 const id = 'preview-only';
-const text = ref("# Hello Editor\n" +
-    "### nihaohao\n" +
-    "```language\n" +
-    "#include<iostream>\n" +
-    "using namespace std;\n" +
-    "int main(){\n" +
-    "  cout << \"Hello \" << endl ;\n" +
-    "  return 0;\n" +
-    "}\n" +
-    "```\n" +
-    "## nihao\n" +
-    "1. zhehsiyi\n" +
-    "2. zheshier\n" +
-    "3. zheshisan\n");
+const options = reactive({
+  data: {
+    blog: {
+      content: '123'
+    }
+  }
+})
+const fetchBlogContent = () => {
+  get('/api/blog/getBlog',
+      {id: pid},
+      (message, data) => {
+        options.data = data
+        console.log(options.data.blog.content)
+      })
+}
+onBeforeMount(() => {
+  fetchBlogContent();
+})
+
 const scrollElement = document.documentElement;
 </script>
 
@@ -34,11 +44,10 @@ const scrollElement = document.documentElement;
     </aside>
     <main class="flex-1">
       <div class="p-1">
-        <MdPreview :theme="themeStore.currentTheme" :editorId="id" :modelValue="text"/>
+        <MdPreview :theme="themeStore.currentTheme" :editorId="id" :modelValue="options.data.blog.content"/>
       </div>
     </main>
   </div>
-
 </template>
 
 <style scoped>
