@@ -1,4 +1,4 @@
-package com.wjy.backend.Controller;
+package com.wjy.backend.controller;
 
 import com.wjy.backend.Entity.pojo.Blog;
 import com.wjy.backend.Entity.pojo.RestBean;

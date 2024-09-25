@@ -17,11 +17,12 @@ const loginForm = reactive({
 })
 
 const loginHandler = () => {
-  post('/api/user/login',{
+  post('/api/auth/login', {
     username: loginForm.username,
     password: loginForm.password
   },(message,data) => {
     messageApi.success(message + '3s后为您转到首页')
+    localStorage.setItem("authToken", data);
     setTimeout(()=>{
       router.push('/')
     },3000)

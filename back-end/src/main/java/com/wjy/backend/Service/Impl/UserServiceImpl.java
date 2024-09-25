@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class UserServiceImpl implements UserService {
-    @Resource
+    @Resource//资源
     UserMapper userMapper;
 
     @Override

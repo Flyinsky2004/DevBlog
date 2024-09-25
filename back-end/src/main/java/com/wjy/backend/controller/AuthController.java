@@ -1,8 +1,9 @@
-package com.wjy.backend.Controller;
+package com.wjy.backend.controller;
 
 import com.wjy.backend.Entity.pojo.RestBean;
 import com.wjy.backend.Entity.pojo.User;
 import com.wjy.backend.Service.UserService;
+import com.wjy.backend.utils.JWTUtil;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.web.bind.annotation.*;
@@ -13,8 +14,8 @@ import org.springframework.web.bind.annotation.*;
  * @date 2024/9/9 20:14
  */
 @RestController
-@RequestMapping("/api/user")
-public class UserController {
+@RequestMapping("/api/auth")
+public class AuthController {
     @Resource
     UserService userService;
 
@@ -22,6 +23,16 @@ public class UserController {
     //前端《=====HTTP====》后端 《===NGINX转发https流量 HTTP ===》GET POST
     //Post 提交表单 提交数据 Get 获取数据
     //Session会话 存服务器 《======》Coockie 浏览器 缓存数据
+
+    /**
+     * 1。存储在后端服务器
+     * 2.有寿命 有状态
+     *
+     * @param username
+     * @param password
+     * @param session
+     * @return
+     */
     @PostMapping("login")
     public RestBean<String> login(@RequestParam String username,
                                   @RequestParam String password,
@@ -32,25 +43,8 @@ public class UserController {
         }else{
             loginUser.setPassword("*");
             session.setAttribute("user", loginUser);
-            return RestBean.success("登陆成功", "登陆成功");
+            return RestBean.success("登陆成功", JWTUtil.createToken(loginUser));
         }
     }
 
-    @GetMapping("myinfo")
-    public RestBean<User> getMyInfo(HttpSession session) {
-        if (session.getAttribute("user") == null) return RestBean.failure(401, "未登陆");
-        User theUser = (User) session.getAttribute("user");
-        return RestBean.success("cg", theUser);
-    }
-
-    @GetMapping("logout")
-    public RestBean<String> logout(HttpSession session) {
-        User logoinUser = (User) session.getAttribute("user");
-        if (logoinUser == null) return RestBean.failure(401, "您尚未登陆");
-        else {
-            session.removeAttribute("user");
-            session.invalidate();
-        }
-        return RestBean.success("登出成功！");
-    }
 }
