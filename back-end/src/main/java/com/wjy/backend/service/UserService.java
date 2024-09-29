@@ -1,6 +1,6 @@
-package com.wjy.backend.Service;
+package com.wjy.backend.service;
 
-import com.wjy.backend.Entity.pojo.User;
+import com.wjy.backend.entity.pojo.User;
 
 /**
  * @author Flyinsky
@@ -9,4 +9,6 @@ import com.wjy.backend.Entity.pojo.User;
  */
 public interface UserService {
     User login(String username, String password);
+
+    User getUserById(int id);
 }

@@ -1,6 +1,6 @@
-package com.wjy.backend.Entity.vo;
+package com.wjy.backend.entity.vo;
 
-import com.wjy.backend.Entity.pojo.Blog;
+import com.wjy.backend.entity.pojo.Blog;
 import lombok.Data;
 
 /**
@@ -9,7 +9,7 @@ import lombok.Data;
  * @date 2024/9/19 20:41
  */
 //View Object
-@Data
+@Data //View Object VO
 public class BlogVO {
     private Blog blog;
     private String username, avator;

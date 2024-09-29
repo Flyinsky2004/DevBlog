@@ -1,4 +1,4 @@
-package com.wjy.backend.Entity.requestbodies;
+package com.wjy.backend.entity.requestbodies;
 
 import lombok.Data;
 

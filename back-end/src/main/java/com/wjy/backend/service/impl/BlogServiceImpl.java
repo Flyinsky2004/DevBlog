@@ -1,10 +1,10 @@
-package com.wjy.backend.Service.Impl;
+package com.wjy.backend.service.impl;
 
-import com.wjy.backend.Entity.pojo.Blog;
-import com.wjy.backend.Entity.vo.BlogVO;
-import com.wjy.backend.Mapper.BlogMapper;
-import com.wjy.backend.Mapper.UserMapper;
-import com.wjy.backend.Service.BlogService;
+import com.wjy.backend.entity.pojo.Blog;
+import com.wjy.backend.entity.vo.BlogVO;
+import com.wjy.backend.mapper.BlogMapper;
+import com.wjy.backend.mapper.UserMapper;
+import com.wjy.backend.service.BlogService;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
@@ -39,6 +39,7 @@ public class BlogServiceImpl implements BlogService {
 
     @Override
     public BlogVO getBlogById(int id) {
+        blogMapper.updateWatchesById(id);
         Blog blog = blogMapper.getBlogById(id);
         return new BlogVO(blog, userMapper.getUsernameById(blog.getAuthorId()), userMapper.getAvatorById(blog.getAuthorId()));
     }

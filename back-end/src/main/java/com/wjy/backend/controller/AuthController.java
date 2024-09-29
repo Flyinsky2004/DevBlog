@@ -1,8 +1,8 @@
 package com.wjy.backend.controller;
 
-import com.wjy.backend.Entity.pojo.RestBean;
-import com.wjy.backend.Entity.pojo.User;
-import com.wjy.backend.Service.UserService;
+import com.wjy.backend.entity.pojo.RestBean;
+import com.wjy.backend.entity.pojo.User;
+import com.wjy.backend.service.UserService;
 import com.wjy.backend.utils.JWTUtil;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpSession;
@@ -35,14 +35,11 @@ public class AuthController {
      */
     @PostMapping("login")
     public RestBean<String> login(@RequestParam String username,
-                                  @RequestParam String password,
-                                  HttpSession session) {
+                                  @RequestParam String password) {
         User loginUser = userService.login(username, password);
         if( loginUser == null ) {
             return RestBean.failure(401,"账号或密码错误");
         }else{
-            loginUser.setPassword("*");
-            session.setAttribute("user", loginUser);
             return RestBean.success("登陆成功", JWTUtil.createToken(loginUser));
         }
     }

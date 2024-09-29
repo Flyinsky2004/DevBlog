@@ -1,6 +1,7 @@
 <script setup>
 import {onMounted, reactive} from "vue";
 import {get} from "@/net/index.js";
+import router from "@/router/index.js";
 
 const options = reactive({
   blogs: []
@@ -39,10 +40,14 @@ const siderBar = [{
 
 `
 }]
+
+const blogClickHandler = (blogID) => {
+  router.push('/view/' + blogID)
+}
 </script>
 <template>
   <div class="grid grid-cols-[1fr,5fr,2fr]">
-    <div>
+    <div class="p-1">
       <div class="basic-color flex flex-nowrap gap-4 clickEffect1 rounded justify-center p-2"
            v-for="element in siderBar">
         <div v-html="element.ico"></div>
@@ -50,7 +55,8 @@ const siderBar = [{
       </div>
     </div>
     <div>
-      <div class="mx-auto rounded-xl p-4 clickEffect1" v-for="blog in options.blogs">
+      <div @click="blogClickHandler(blog.blog.id)" class="mx-auto rounded-xl p-4 clickEffect1"
+           v-for="blog in options.blogs">
         <h1 class="text-[#265ca1]">{{ blog.blog.title }}</h1>
         <div class="grid grid-cols-[1fr,14fr]">
           <a-avatar shape="square" class="w-full h-auto" :src="blog.avator">

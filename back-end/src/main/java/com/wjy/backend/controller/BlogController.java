@@ -1,11 +1,12 @@
 package com.wjy.backend.controller;
 
-import com.wjy.backend.Entity.pojo.Blog;
-import com.wjy.backend.Entity.pojo.RestBean;
-import com.wjy.backend.Entity.pojo.User;
-import com.wjy.backend.Entity.vo.BlogVO;
-import com.wjy.backend.Service.BlogService;
+import com.wjy.backend.entity.pojo.Blog;
+import com.wjy.backend.entity.pojo.RestBean;
+import com.wjy.backend.entity.pojo.User;
+import com.wjy.backend.entity.vo.BlogVO;
+import com.wjy.backend.service.BlogService;
 import jakarta.annotation.Resource;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,12 +26,11 @@ public class BlogController {
 
     @PostMapping("addNew")
     public RestBean<String> addNewBlog(
-            HttpSession session,
+            HttpServletRequest request,
             @RequestParam("title") String title,
             @RequestParam("content") String content
     ) {
-        User user = (User) session.getAttribute("user");
-        if (blogService.addNewBlog(new Blog(title, user.getId(), new Date(), content)) > 0)
+        if (blogService.addNewBlog(new Blog(title, (Integer) request.getAttribute("id"), new Date(), content)) > 0)
             return RestBean.success("发布成功～");
         else return RestBean.failure(503, "出现错误，请联系管理员");
     }

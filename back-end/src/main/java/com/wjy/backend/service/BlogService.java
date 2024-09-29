@@ -1,7 +1,7 @@
-package com.wjy.backend.Service;
+package com.wjy.backend.service;
 
-import com.wjy.backend.Entity.pojo.Blog;
-import com.wjy.backend.Entity.vo.BlogVO;
+import com.wjy.backend.entity.pojo.Blog;
+import com.wjy.backend.entity.vo.BlogVO;
 
 import java.util.List;
 
@@ -16,4 +16,6 @@ public interface BlogService {
     List<BlogVO> getOrderByBlogs();
 
     BlogVO getBlogById(int id);
+
+
 }

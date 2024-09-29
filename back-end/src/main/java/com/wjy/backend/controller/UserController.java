@@ -1,10 +1,12 @@
 package com.wjy.backend.controller;
 
-import com.wjy.backend.Entity.pojo.RestBean;
-import com.wjy.backend.Entity.pojo.User;
+import com.wjy.backend.entity.pojo.RestBean;
+import com.wjy.backend.entity.pojo.User;
+import com.wjy.backend.service.UserService;
+import jakarta.annotation.Resource;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -16,11 +18,13 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/user")
 public class UserController {
+    @Resource
+    UserService userService;
     @GetMapping("myinfo")
-    public RestBean<User> getMyInfo(HttpSession session) {
-        if (session.getAttribute("user") == null) return RestBean.failure(401, "未登陆");
-        User theUser = (User) session.getAttribute("user");
-        return RestBean.success("cg", theUser);
+    public RestBean<User> getMyInfo(HttpServletRequest request) {
+        User user = userService.getUserById((Integer) request.getAttribute("id"));
+        user.setPassword(null);
+        return RestBean.success("cg", user);
     }
 
     @GetMapping("logout")
