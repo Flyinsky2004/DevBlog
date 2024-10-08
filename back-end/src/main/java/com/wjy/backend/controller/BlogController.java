@@ -41,8 +41,35 @@ public class BlogController {
     }
 
     @GetMapping("getBlog")
-    public RestBean<BlogVO> getBlog(@RequestParam("id") int id) {
-        return RestBean.success("cg", blogService.getBlogById(id));
+    public RestBean<BlogVO> getBlog(@RequestParam("id") int id,
+                                    HttpServletRequest request) {
+        Integer userId = (Integer) request.getAttribute("id");
+        return RestBean.success("cg", blogService.getBlogById(id, userId));
+    }
+
+    @PostMapping("like")
+    public RestBean<String> likeBlog(@RequestParam("id") int id,
+                                     HttpServletRequest request) {
+        int userId = (Integer) request.getAttribute("id");
+        String s = blogService.doNewLike(userId, id);
+        if (s == null) return RestBean.success("点赞成功！");
+        else return RestBean.failure(500, s);
+    }
+
+    @PostMapping("unlike")
+    public RestBean<String> unlikeBlog(@RequestParam("id") int id,
+                                       HttpServletRequest request) {
+        int userId = (Integer) request.getAttribute("id");
+        String s = blogService.deleteLike(userId, id);
+        if (s == null) return RestBean.success("取消点赞成功！");
+        else return RestBean.failure(500, s);
+    }
+
+    @GetMapping("check")
+    public RestBean<Integer> checkLikedBlog(@RequestParam("id") int id,
+                                            HttpServletRequest request) {
+        int userId = (Integer) request.getAttribute("id");
+        return RestBean.success("", blogService.checkUserLikedBlog(userId, id));
     }
 
 }

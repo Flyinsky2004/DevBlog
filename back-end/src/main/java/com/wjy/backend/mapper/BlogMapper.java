@@ -40,4 +40,10 @@ public interface BlogMapper {
 
     @Update("UPDATE tb_blogs SET watches = watches + 1 WHERE id = #{id}")
     int updateWatchesById(int id);
+
+    @Update("Update tb_blogs SET likes = likes + 1 WHERE id = #{id}")
+    int addLikesById(int id);
+
+    @Update("Update tb_blogs SET likes = likes - 1 WHERE id = #{id}")
+    int unlikeById(int id);
 }

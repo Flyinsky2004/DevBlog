@@ -4,8 +4,11 @@ import {MdPreview, MdCatalog} from 'md-editor-v3';
 import 'md-editor-v3/lib/preview.css';
 import {useThemeStore} from "@/stores/theme.js";
 import {useRoute} from "vue-router";
-import {get} from "@/net/index.js";
+import {get, post} from "@/net/index.js";
 import {message} from "ant-design-vue";
+
+const [messageApi, contextHolder] = message.useMessage();
+
 import {formatDate} from "@/util/DateFormattor.js";
 
 const route = useRoute()
@@ -32,20 +35,50 @@ onBeforeMount(() => {
 })
 
 const scrollElement = document.documentElement;
+
+const likeHandler = () => {
+  if (options.data.isLiked) {
+    post('/api/blog/unlike', {
+      id: pid
+    }, (message) => {
+      options.data.blog.likes--
+      options.data.isLiked = false
+      messageApi.warning(message);
+    }, (message) => {
+      messageApi.warning(message)
+    })
+  } else {
+    post('/api/blog/like', {
+      id: pid
+    }, (message) => {
+      options.data.blog.likes++
+      options.data.isLiked = true
+      messageApi.success(message);
+    }, (message) => {
+      messageApi.warning(message)
+    })
+  }
+
+}
 </script>
 
 <template>
+  <contextHolder/>
   <div class="flex h-screen">
     <aside class="w-2/12 text-white">
       <div class="p-5">
-        <h2 class="font-bold">Sidebar</h2>
-        <MdCatalog :editorId="id" :scrollElement="scrollElement"/>
+        <h2 class="font-bold basic-color">Sidebar</h2>
+        <MdCatalog class="basic-color" :editorId="id" :scrollElement="scrollElement"/>
 
       </div>
     </aside>
     <main class="w-full grid grid-cols-[5fr,1fr]">
       <div class="p-1">
         <h1 class="font-bold basic-color text-3xl">{{ options.data.blog.title }}</h1>
+        <span class="text-md select-none"
+              :class="options.data.blog.isPublic === 0 ? 'text-green-400' : 'text-red-400'">查看权限：{{
+            options.data.blog.isPublic === 0 ? '公开' : '私密'
+          }}</span>
         <div class="flex flex-nowrap select-none">
           <h1 class="basic-color text-md hover:underline hover:text-blue-500 cursor-pointer">
             {{ options.data.username }}
@@ -53,8 +86,11 @@ const scrollElement = document.documentElement;
           <h1 class="basic-color text-md ml-2">
             最后修改日期:{{ formatDate(options.data.blog.updateDate) }}
           </h1>
-          <div class="flex flex-nowrap ml-2">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+        </div>
+        <div class="flex flex-nowrap">
+          <div class="flex flex-nowrap ml-2 clickEffect1 cursor-pointer p-2 rounded-xl" @click="likeHandler()">
+            <svg xmlns="http://www.w3.org/2000/svg" :fill="options.data.isLiked ? '#ea333d' : 'none'"
+                 viewBox="0 0 24 24" stroke-width="1.5"
                  stroke="currentColor" class="size-5">
               <path stroke-linecap="round" stroke-linejoin="round"
                     d="M6.633 10.25c.806 0 1.533-.446 2.031-1.08a9.041 9.041 0 0 1 2.861-2.4c.723-.384 1.35-.956 1.653-1.715a4.498 4.498 0 0 0 .322-1.672V2.75a.75.75 0 0 1 .75-.75 2.25 2.25 0 0 1 2.25 2.25c0 1.152-.26 2.243-.723 3.218-.266.558.107 1.282.725 1.282m0 0h3.126c1.026 0 1.945.694 2.054 1.715.045.422.068.85.068 1.285a11.95 11.95 0 0 1-2.649 7.521c-.388.482-.987.729-1.605.729H13.48c-.483 0-.964-.078-1.423-.23l-3.114-1.04a4.501 4.501 0 0 0-1.423-.23H5.904m10.598-9.75H14.25M5.904 18.5c.083.205.173.405.27.602.197.4-.078.898-.523.898h-.908c-.889 0-1.713-.518-1.972-1.368a12 12 0 0 1-.521-3.507c0-1.553.295-3.036.831-4.398C3.387 9.953 4.167 9.5 5 9.5h1.053c.472 0 .745.556.5.96a8.958 8.958 0 0 0-1.302 4.665c0 1.194.232 2.333.654 3.375Z"/>
@@ -80,11 +116,7 @@ const scrollElement = document.documentElement;
             </svg>
             {{ options.data.blog.favourites }}
           </div>
-          <span class="text-md"
-                :class="options.data.blog.isPublic === 0 ? 'text-green-400' : 'text-red-400'">查看权限：{{ options.data.blog.isPublic === 0 ? '公开' : '私密' }}</span>
-
         </div>
-
         <MdPreview :theme="themeStore.currentTheme" :editorId="id" :modelValue="options.data.blog.content"/>
       </div>
       <div>

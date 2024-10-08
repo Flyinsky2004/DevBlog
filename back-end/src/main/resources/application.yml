@@ -1,13 +1,3 @@
 spring:
-  datasource:
-    url: jdbc:mysql://localhost:3306/devblog
-    #jdbc????? ????jdbc:mysql://????????:??/????
-    username: root
-    #?????
-    password: Wjywjy2333@
-    #?????
-    driver-class-name: com.mysql.cj.jdbc.Driver
-server:
-  servlet:
-    session:
-      timeout: 1s
+  profiles:
+    active: dev

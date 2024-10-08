@@ -27,5 +27,5 @@ body {
 .clickEffect1 {
     @apply cursor-pointer select-none active:bg-gray-300 hover:bg-gray-200 text-black
     dark:text-white dark:active:bg-gray-800 dark:hover:bg-gray-900;
-    transition: background-color 1s, color 1s !important;
+    transition: background-color 0.5s, color 0.5s !important;
 }

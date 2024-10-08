@@ -15,7 +15,11 @@ public interface BlogService {
 
     List<BlogVO> getOrderByBlogs();
 
-    BlogVO getBlogById(int id);
+    BlogVO getBlogById(int id, int userId);
 
+    String doNewLike(Integer userId, Integer blogId);
 
+    String deleteLike(Integer userId, Integer blogId);
+
+    int checkUserLikedBlog(Integer userId, Integer blogId);
 }

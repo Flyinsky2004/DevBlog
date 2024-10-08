@@ -4,6 +4,7 @@ import {ref} from "vue";
 import ThemeSwitch from "@/components/ThemeSwitch.vue";
 import logo from '@/assets/images/logo.png'
 import router from "@/router/index.js";
+import {useUserStore} from "@/stores/userStore.js";
 const a = ref('User Avatar')
 </script>
 
@@ -16,7 +17,7 @@ const a = ref('User Avatar')
         </div>
         <div class="flex items-center gap-1">
           <ThemeSwitch/>
-          <img :src="yjm" :alt="a" class="h-8 w-8 rounded-full">
+          <img :src="useUserStore().user.avator" :alt="a" class="h-8 w-8 rounded-full">
         </div>
       </div>
     </header>
