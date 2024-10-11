@@ -79,7 +79,7 @@ const likeHandler = () => {
               :class="options.data.blog.isPublic === 0 ? 'text-green-400' : 'text-red-400'">查看权限：{{
             options.data.blog.isPublic === 0 ? '公开' : '私密'
           }}</span>
-        <div class="flex flex-nowrap select-none">
+        <div class="flex flex-nowrap select-none mt-2">
           <h1 class="basic-color text-md hover:underline hover:text-blue-500 cursor-pointer">
             {{ options.data.username }}
           </h1>
@@ -98,7 +98,7 @@ const likeHandler = () => {
             {{ options.data.blog.likes }}
           </div>
 
-          <div class="flex flex-nowrap ml-2">
+          <div class="flex flex-nowrap ml-2 p-2 select-none">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                  stroke="currentColor" class="size-5">
               <path stroke-linecap="round" stroke-linejoin="round"
@@ -108,7 +108,7 @@ const likeHandler = () => {
             {{ options.data.blog.watches }}
           </div>
 
-          <div class="flex flex-nowrap ml-2">
+          <div class="flex flex-nowrap ml-2 p-2">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                  stroke="currentColor" class="size-5">
               <path stroke-linecap="round" stroke-linejoin="round"

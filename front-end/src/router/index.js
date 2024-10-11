@@ -38,6 +38,10 @@ const router = createRouter({
                     name: 'viewBlog',
                     path: '/view/:id',
                     component: () => import('@/views/Common/ViewBlog.vue')
+                }, {
+                    name: 'notification',
+                    path: '/notification',
+                    component: () => import('@/views/Common/Notification.vue')
                 }
             ]
         }

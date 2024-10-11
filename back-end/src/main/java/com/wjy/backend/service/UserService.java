@@ -1,6 +1,9 @@
 package com.wjy.backend.service;
 
+import com.wjy.backend.entity.pojo.NotificationQueryObject;
 import com.wjy.backend.entity.pojo.User;
+
+import java.util.List;
 
 /**
  * @author Flyinsky
@@ -9,6 +12,9 @@ import com.wjy.backend.entity.pojo.User;
  */
 public interface UserService {
     User login(String username, String password);
-
     User getUserById(int id);
+
+    int getUnreadNotificationCount(int userId);
+
+    List<NotificationQueryObject> getAllUsersNotification(Integer userId);
 }

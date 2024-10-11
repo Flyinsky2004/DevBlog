@@ -12,6 +12,7 @@ import lombok.Data;
 public class User {
     private Integer id;
     private String username,password,mail,avator;
+    private Integer unReadNotiCnt;
 
     public User() {
     }

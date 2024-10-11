@@ -1,15 +1,19 @@
 package com.wjy.backend.service.impl;
 
 import com.wjy.backend.entity.pojo.Blog;
+import com.wjy.backend.entity.pojo.Notification;
+import com.wjy.backend.entity.pojo.NotificationRS;
 import com.wjy.backend.entity.vo.BlogVO;
 import com.wjy.backend.mapper.BlogMapper;
 import com.wjy.backend.mapper.LikeMapper;
+import com.wjy.backend.mapper.NotificaitonMapper;
 import com.wjy.backend.mapper.UserMapper;
 import com.wjy.backend.service.BlogService;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -25,6 +29,8 @@ public class BlogServiceImpl implements BlogService {
     LikeMapper likeMapper;
     @Resource
     UserMapper userMapper;
+    @Resource
+    NotificaitonMapper notificaitonMapper;
 
     @Override
     public int addNewBlog(Blog blog) {
@@ -54,7 +60,13 @@ public class BlogServiceImpl implements BlogService {
     @Override
     public String doNewLike(Integer userId, Integer blogId) {
         if (likeMapper.checkUserLikedBlog(userId, blogId) != null) return "你已经点过赞了！";
-        if (likeMapper.addNewLikeRecord(userId, blogId) == 1 && blogMapper.addLikesById(blogId) == 1) return null;
+        if (likeMapper.addNewLikeRecord(userId, blogId) == 1 && blogMapper.addLikesById(blogId) == 1) {
+            Blog blog = blogMapper.getBlogById(blogId);
+            Notification notification = new Notification(0, "点赞通知", "您的文章：\"" + blog.getTitle() + "\"刚刚被用户uid:" + userId + "点赞了。", new Date());
+            int a = notificaitonMapper.insertNewNotificaitonData(notification);
+            notificaitonMapper.insertNewNotificaitonRS(new NotificationRS(blog.getAuthorId(), notification.getId(), false));
+            return null;
+        }
         else return "发生错误，请稍后重试～";
     }
 
